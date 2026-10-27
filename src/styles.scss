@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import './app/experience/experience-section';
+@import './app/projects/project-gallery';
+@import './app/skills/skills-section';
+@import './app/contact/contact-section';
+:root { --paper:#081426; --ink:#edf6ff; --muted:#a9bad2; --accent:#42C4C8; --line:#2a3f5f; --surface:#102340; }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; scroll-padding-top:100px; }
+body { margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; -webkit-font-smoothing:antialiased; }
+button,input { font:inherit; }
+a, a:visited { color:inherit; text-decoration:none; }
+a:hover, a:active { color:var(--accent); text-decoration:none; }
+button,a,label { -webkit-tap-highlight-color:transparent; }
+:focus-visible { outline:3px solid var(--accent); outline-offset:6px; }
+::selection { background:var(--accent); color:var(--paper); }
+@media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { animation:none!important; transition:none!important; } }
+
+/* Header palette stays consistent in every navigation state. */
+app-root .site-header a { color:var(--ink); }
+app-root .site-header a:hover, app-root .site-header a:focus-visible { color:var(--accent); }
+
+app-root .site-header {
+  width:100%;
+  margin:0;
+  height:108px;
+  border-bottom:2px solid var(--accent);
+  background:var(--paper);
+  color:var(--ink);
+}
+app-root .header-inner {
+  width:min(1240px,calc(100% - 112px));
+  height:100%;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+@media(max-width:1000px) {
+  app-root .header-inner { width:calc(100% - 64px); }
+}
+
+/* Shared alignment for the portfolio's full-width editorial sections. */
+:root app-root .section-grid { grid-template-columns:1fr; gap:24px; }
+:root app-root .section-grid > .section-label,
+:root app-root .section-grid > div > h2 { text-align:center; }
+:root app-root .about-prose { max-width:850px; margin:32px auto; gap:40px; }
+:root app-root .about > div > .text-link { display:flex; width:fit-content; margin:auto; }
+:root app-root .toolkit-intro { max-width:600px; margin:24px auto 32px; text-align:center; }
+:root app-root .skill-list { max-width:850px; margin:auto; }
+:root app-root .contact { text-align:center; }
+:root app-root .contact h2 > span { display:none; }
+:root app-root .contact-bottom { max-width:850px; margin:35px auto 0; text-align:left; }
+:root app-root .social-links { justify-content:center; }
+@media(max-width:700px) {
+  app-root .header-inner { width:calc(100% - 40px); }
+  :root app-root .site-header .wordmark { font-size:18px; letter-spacing:-.8px; }
+  :root app-root .about-prose { gap:20px; }
+  :root app-root .contact-bottom { align-items:center; text-align:center; }
+  :root app-root footer { flex-direction:column; gap:16px; }
+}

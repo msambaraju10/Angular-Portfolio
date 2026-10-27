@@ -1,0 +1,16 @@
+<div class="project-status" *ngIf="loading" role="status" aria-live="polite">Loading projects from GitHub…</div>
+<div class="projects-loading" *ngIf="loading" aria-hidden="true"><div></div><div></div></div>
+<div class="project-status project-error" *ngIf="!loading && error" role="status">
+  <p>{{error}}</p><button type="button" (click)="loadProjects()">Try again <span aria-hidden="true">↻</span></button>
+</div>
+<div class="project-status" *ngIf="!loading && !error && !projects.length">Explore my public repositories on GitHub for my latest work.</div>
+<div class="repository-grid" *ngIf="!loading && projects.length" aria-label="Featured GitHub projects">
+  <article class="repository-card" *ngFor="let project of projects; let index = index" [attr.aria-labelledby]="'project-title-' + project.id">
+    <div class="repository-top"><span class="repository-number">0{{index + 1}}</span><span class="repository-language" *ngIf="project.language">{{project.language}}</span></div>
+    <h3 [id]="'project-title-' + project.id">{{displayName(project.name)}}</h3>
+    <p class="repository-description">{{project.description || 'Explore the repository for source code and project details.'}}</p>
+    <ul class="repository-topics" *ngIf="project.topics && project.topics.length" aria-label="Project topics"><li *ngFor="let topic of project.topics.slice(0, 4)">{{topic}}</li></ul>
+    <a class="repository-link" [href]="repositoryUrl(project)" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'View ' + displayName(project.name) + ' source code on GitHub'">View source code <span aria-hidden="true">↗</span></a>
+  </article>
+</div>
+<div class="repository-footer"><p>Original public repositories, prioritized by project description, technology, topics, and activity.</p><a href="https://github.com/msambaraju10?tab=repositories" target="_blank" rel="noopener noreferrer">All repositories <span aria-hidden="true">↗</span></a></div>

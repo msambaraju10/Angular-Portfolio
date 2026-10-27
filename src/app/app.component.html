@@ -1,0 +1,131 @@
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="header-inner">
+  <a class="wordmark" href="#" aria-label="Manasa Sambaraju home">Manasa Sambaraju</a>
+  <button class="menu-toggle" type="button" (click)="menuOpen = !menuOpen" [attr.aria-expanded]="menuOpen" aria-controls="navigation">{{menuOpen ? 'Close' : 'Menu'}} <span>☰</span></button>
+  <nav id="navigation" [class.open]="menuOpen" aria-label="Main navigation">
+    <a href="#about" (click)="closeMenu()">About</a>
+    <a href="#experience" (click)="closeMenu()">Experience</a>
+    <a href="#projects" (click)="closeMenu()">Projects</a>
+    <a href="#skills" (click)="closeMenu()">Skills</a>
+    <a class="nav-contact" href="#contact" (click)="closeMenu()">Contact <span aria-hidden="true">↗</span></a>
+  </nav>
+  </div>
+</header>
+<main id="main">
+  <section id="about" class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <h1 id="hero-title">Hi, I’m <em>Manasa!</em></h1>
+      <div class="hero-description">
+        <p>I’m a Software Engineer at State Farm, passionate about building scalable, reliable, and user-focused applications. I enjoy solving complex engineering challenges, improving system performance, and developing solutions that address real-world problems.</p>
+        <p>My experience spans full-stack development, enterprise application modernization, and cloud-based solutions. I’m driven by curiosity, continuous learning, and a desire to build software that makes a meaningful impact.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="button primary" href="#projects">Explore my work <span aria-hidden="true">↗</span></a>
+        <a *ngIf="resumeUrl; else heroResumePending" class="button secondary" [href]="resumeUrl" download="Manasa-Sambaraju-Resume.pdf">Download résumé <span aria-hidden="true">↓</span></a>
+        <ng-template #heroResumePending><button class="button secondary" type="button" disabled title="Résumé PDF coming soon">Download résumé <span aria-hidden="true">↓</span></button></ng-template>
+      </div>
+    </div>
+    <div class="portrait-column">
+      <div class="portrait-frame">
+        <div class="portrait-placeholder" *ngIf="!photoVisible"><span class="portrait-initial">m.</span><p>A face behind the code.</p><span>Your portrait goes here</span></div>
+        <img *ngIf="photoVisible" [src]="photoUrl" alt="Portrait of Manasa Sambaraju" (error)="photoVisible = false">
+      </div>
+
+    </div>
+    <div class="hero-bottom"><span>CURIOUS MIND. ENGINEER AT HEART.</span><a href="#experience">SCROLL TO EXPLORE <span>↓</span></a></div>
+  </section>
+  <section id="experience" class="experience section-grid" aria-labelledby="experience-title">
+    <p class="section-label">02 / EXPERIENCE</p>
+    <div>
+      <h2 id="experience-title">Professional <em>Experience</em></h2>
+      <p class="experience-intro">Roles, contributions, and the problems I’ve helped solve.</p>
+      <div class="career-list">
+        <article class="career-card" *ngFor="let experience of experiences; let index = index" [class.career-current]="experience.current" [attr.aria-labelledby]="'career-role-' + index">
+          <div class="career-meta">
+            <span *ngIf="experience.current" class="career-status">Current role</span>
+            <p class="career-dates">{{experience.start}} — {{experience.end}}</p>
+            <p class="career-location">{{experience.location}}</p>
+          </div>
+          <div class="career-detail">
+            <h3 class="career-role" [id]="'career-role-' + index">{{experience.role}}</h3>
+            <p class="career-company">{{experience.company}}</p>
+            <ul class="career-achievements"><li *ngFor="let achievement of experience.achievements">{{achievement}}</li></ul>
+            <ul class="career-technologies" aria-label="Technologies used"><li *ngFor="let technology of experience.technologies">{{technology}}</li></ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section id="projects" class="work" aria-labelledby="work-title">
+    <div class="projects-heading">
+      <p class="section-label">03/PROJECTS</p>
+      <h2 id="work-title">Projects</h2>
+    </div>
+    <div class="project-status" *ngIf="loading" role="status" aria-live="polite">Loading projects from GitHub…</div>
+<div class="projects-loading" *ngIf="loading" aria-hidden="true"><div></div><div></div></div>
+<div class="project-status project-error" *ngIf="!loading && error" role="status">
+  <p>{{error}}</p><button type="button" (click)="loadProjects()">Try again <span aria-hidden="true">↻</span></button>
+</div>
+<div class="project-status" *ngIf="!loading && !error && !projects.length">Explore my public repositories on GitHub for my latest work.</div>
+<div class="repository-grid" *ngIf="!loading && projects.length" aria-label="Featured GitHub projects">
+  <article class="repository-card" *ngFor="let project of projects; let index = index" [attr.aria-labelledby]="'project-title-' + project.id">
+    <div class="repository-cover" aria-hidden="true">
+      <div class="repository-cover-bar"><span class="repository-window-dots"><i></i><i></i><i></i></span><span>SOURCE / 0{{index + 1}}</span><span>↗</span></div>
+      <div class="repository-cover-art"><span class="repository-number">0{{index + 1}}</span><span class="repository-glyph">&lt;/&gt;</span></div>
+      <span class="repository-path">msambaraju10 / {{project.name}}</span>
+    </div>
+    <div class="repository-content">
+      <div class="repository-top"><span class="repository-kicker">PUBLIC REPOSITORY</span><span class="repository-language" *ngIf="project.language">{{project.language}}</span></div>
+      <h3 [id]="'project-title-' + project.id">{{displayName(project.name)}}</h3>
+      <p class="repository-description">{{project.description || 'Explore the repository for source code and project details.'}}</p>
+      <ul class="repository-topics" *ngIf="projectTopics(project).length" aria-label="Project topics"><li *ngFor="let topic of projectTopics(project)">{{topic}}</li></ul>
+      <a class="repository-link" [href]="repositoryUrl(project)" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'View ' + displayName(project.name) + ' source code on GitHub'"><span>Explore the code</span><span class="repository-link-arrow" aria-hidden="true">↗</span></a>
+    </div>
+  </article>
+</div>
+<div class="repository-footer"><p>Explore my public software engineering projects and the technologies behind them.</p><a href="https://github.com/msambaraju10?tab=repositories" target="_blank" rel="noopener noreferrer">All repositories <span aria-hidden="true">↗</span></a></div>
+  </section>
+  <section id="skills" class="skills-section" aria-labelledby="skills-title">
+    <p class="section-label">04 / TECHNICAL EXPERTISE</p>
+    <h2 id="skills-title">Skills</h2>
+    <div class="skills-board">
+      <div class="skills-board-bar"><span><span class="skills-status-dot" aria-hidden="true"></span> ENGINEERING STACK</span><span>{{skillGroups.length}} DOMAINS</span></div>
+      <div class="skills-grid">
+        <article class="skills-card" *ngFor="let group of skillGroups; let index = index" [attr.aria-labelledby]="'skill-group-' + index">
+          <div class="skills-card-top">
+            <span class="skills-category-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" [ngSwitch]="index" focusable="false">
+                <g *ngSwitchCase="0"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/></g>
+                <g *ngSwitchCase="1"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></g>
+                <g *ngSwitchCase="2"><path d="M6 18a5 5 0 0 1-1-10 7 7 0 0 1 13-1 5.5 5.5 0 0 1 0 11M8 21v-7m8 7v-7m-4 7V11"/></g>
+                <g *ngSwitchCase="3"><path d="m2 7 10-5 10 5-10 5L2 7Zm0 5 10 5 10-5M2 17l10 5 10-5"/></g>
+                <g *ngSwitchCase="4"><path d="m12 2 2.7 7.3L22 12l-7.3 2.7L12 22l-2.7-7.3L2 12l7.3-2.7L12 2Zm7 0v4m-2-2h4"/></g>
+                <g *ngSwitchDefault><path d="M14 4a6 6 0 0 0-7 8L2 17a3 3 0 0 0 5 5l5-5a6 6 0 0 0 8-7l-4 4-5-5 4-4Z"/></g>
+              </svg>
+            </span>
+            <span class="skills-card-index" aria-hidden="true">0{{index + 1}}</span>
+          </div>
+          <div class="skills-card-heading"><h3 [id]="'skill-group-' + index">{{group.name}}</h3><p>{{group.items.length}} technologies</p></div>
+          <ul><li *ngFor="let skill of group.items"><span aria-hidden="true"></span>{{skill}}</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section id="contact" class="contact contact-section" aria-labelledby="contact-title">
+    <p class="section-label">05 / CONTACT</p>
+    <h2 id="contact-title">Let’s <em>connect.</em></h2>
+    <p class="contact-intro">Projects, opportunities, or a simple hello.<br>I’d love to hear from you!</p>
+    <div class="contact-simple">
+      <a class="contact-email" [href]="'mailto:' + email">{{email}}</a>
+      <a class="contact-phone" [href]="phoneHref">{{phone}}</a>
+      <div class="contact-actions">
+        <a class="contact-social" [href]="linkedin" target="_blank" rel="noopener noreferrer" [attr.title]="linkedin">LinkedIn <span aria-hidden="true">↗</span><span class="contact-url-tooltip" aria-hidden="true">{{linkedin}}</span></a>
+        <a class="contact-social" [href]="github" target="_blank" rel="noopener noreferrer" [attr.title]="github">GitHub <span aria-hidden="true">↗</span><span class="contact-url-tooltip" aria-hidden="true">{{github}}</span></a>
+
+
+      </div>
+    </div>
+  </section>
+</main>
+<footer><a class="wordmark" href="#">Manasa Sambaraju<span class="accent">.</span></a><p>© {{year}} Manasa Sambaraju</p><a href="#">Back to top ↑</a></footer>

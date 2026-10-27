@@ -1,0 +1,26 @@
+.experience {
+  .experience-intro { max-width:520px; margin:22px auto 36px; color:var(--ink); font-size:14px; font-weight:500; line-height:1.8; text-align:center; }
+  .career-list { max-width:1050px; margin:auto; display:grid; gap:20px; }
+  .career-card { display:grid; grid-template-columns:190px minmax(0,1fr); gap:32px; padding:32px; border:1px solid var(--line); border-radius:12px; background:var(--surface); }
+  .career-current { border-top:2px solid var(--accent); }
+  .career-meta { border-right:1px solid var(--line); padding-right:24px; }
+  .career-number { display:block; margin-bottom:22px; font-family:'Space Grotesk',Arial,sans-serif; color:var(--accent); font-size:28px; line-height:1; }
+  .career-status { display:inline-block; padding:5px 9px; margin-bottom:12px; border:1px solid var(--accent); border-radius:20px; color:var(--accent); font-size:10px; }
+  .career-dates { font-size:12px; line-height:1.8; color:var(--ink); }
+  .career-location { margin-top:8px; font-size:12px; line-height:1.6; color:var(--muted); }
+  .career-company { font-size:13px; line-height:1.6; color:var(--accent); margin-top:10px; }
+  .career-detail .career-role { font-family:'Space Grotesk',Arial,sans-serif; display:block; margin:0; color:var(--ink); font-size:26px; line-height:1.35; letter-spacing:-.5px; font-weight:700; }
+  .career-achievements { margin:22px 0; padding-left:18px; }
+  .career-achievements li { padding-left:5px; margin-bottom:13px; color:var(--muted); font-size:13px; line-height:1.85; }
+  .career-achievements li::marker { color:var(--accent); }
+  .career-technologies { display:flex; flex-wrap:wrap; gap:8px; list-style:none; margin:0; padding:0; }
+  .career-technologies li { padding:6px 10px; border:1px solid var(--line); border-radius:20px; color:var(--ink); font-size:10px; }
+  @media(max-width:700px) {
+    .experience-intro { font-size:13px; margin:20px auto 28px; }
+    .career-card { grid-template-columns:1fr; gap:20px; padding:24px 20px; }
+    .career-meta { border-right:0; border-bottom:1px solid var(--line); padding:0 0 20px; }
+    .career-number { float:right; font-size:24px; margin:0 0 10px 10px; }
+    .career-detail .career-role { font-size:22px; }
+    .career-achievements li { font-size:12px; }
+  }
+}
